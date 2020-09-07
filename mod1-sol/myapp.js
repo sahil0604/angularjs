@@ -2,7 +2,11 @@
 'use strict';
     
 angular.module('MyApp', [])
-.controller('Controller', function ($scope) {
+.controller('Controller',counter)
+.filter('custom',lovefilter);
+
+counter.$inject = ['$scope','customFilter'];
+function counter ($scope,customFilter) {
     $scope.output="";
     $scope.check= function(){
     var N = count($scope.launch) + 1;
@@ -30,6 +34,20 @@ angular.module('MyApp', [])
         return c;
      }
     };
-});
+    $scope.lovestry = function () {
+        var msg = "likes loves likes loves likes";
+        msg = lovefilter(msg)
+        return msg
+    };
+    function lovefilter (){
+        return function (input) {
+            input = input || "";
+            input = input.replace("likes","loves");
+            return input
+        };
+    };
+    
+};
+
 })();
     
